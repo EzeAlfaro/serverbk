@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-Means Clustering</title>
+  <style>
+  table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  }
+  th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+  }
+  th {
+  background-color: #f2f2f2;
+  }
+  #result {
+  margin-top: 20px;
+  text-align: center;
+  }
+  </style>
+ </head>
+ <body>
+  
+  <div id="result">
+  <button onclick="ejecutarKMeans()">Ejecutar K-Means</button>
+  <div id="tabla-container"></div>
+  </div>
+ 
+
+  <script>
+  async function ejecutarKMeans() {
+  const response = await fetch('/kmeans', { method: 'POST' });
+  const data = await response.json();
+  
+  if (response.ok) {
+  mostrarResultados(data.data);
+  } else {
+  document.getElementById('result').innerText = 'Error: ' + data.error;
+  }
+  }
+ 
+
+  function mostrarResultados(data) {
+  let tablaHTML = '<table><thead><tr>';
+  for (const key in data[0]) {
+  tablaHTML += `<th>${key}</th>`;
+  }
+  tablaHTML += '</tr></thead><tbody>';
+ 
+
+  data.forEach(row => {
+  tablaHTML += '<tr>';
+  for (const key in row) {
+  tablaHTML += `<td>${row[key]}</td>`;
+  }
+  tablaHTML += '</tr>';
+  });
+ 
+
+  tablaHTML += '</tbody></table>';
+  document.getElementById('tabla-container').innerHTML = tablaHTML;
+  }
+  </script>
+ </body>
+ </html>
