@@ -19,11 +19,11 @@ logging.basicConfig(
 )
 
 # Ruta relativa al archivo actual
-ruta_dataset = os.path.join(os.path.dirname(__file__), "dataset_empleados_kmeans.txt")
+ruta_dataset = os.path.join(os.path.dirname(__file__), "dataset_empleados_kmeans.xlxs")
 logging.info(f"Intentando cargar dataset desde: {ruta_dataset}")
 
 try:
-    dataset = pd.read_csv(ruta_dataset, sep='\t')  # Leemos el .txt con separador de tabulaciones
+    dataset = pd.read_excel(ruta_dataset, sep='\t')  # Leemos el excel txt con separador de tabulaciones
 except FileNotFoundError:
     logging.error(f"No se encontró el archivo: {ruta_dataset}")
     print(json.dumps({"error": f"No se encontró el archivo: {ruta_dataset}"}))
