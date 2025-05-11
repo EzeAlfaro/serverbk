@@ -18,7 +18,7 @@ KMEANS_SCRIPT = os.path.abspath("K-Means-Rotacion.py")
 def ejecutar_filtrado():
     """Ejecuta el script de filtrado sin necesidad de variables externas."""
     try:
-        filtrar_dataset(DESDE, HASTA)
+        filtrar_dataset()
         logging.info("✅ Filtrado ejecutado correctamente.")
         return True
     except Exception as e:
