@@ -19,7 +19,7 @@ logging.basicConfig(
 )
 
 # Ruta relativa al archivo actual
-ruta_dataset = os.path.join(os.path.dirname(__file__), "dataset_empleados_kmeans.xlsx")
+ruta_dataset = os.path.join(os.path.dirname(__file__), "dataset_empleados_filtrado.xlsx")
 logging.info(f"Intentando cargar dataset desde: {ruta_dataset}")
 
 try:
@@ -70,11 +70,18 @@ dataset_agrupado_por_Nombre_escalado['Cluster'] = kmeans.fit_predict(X)
 
 # Mapeo de clusters a probabilidades
 dataset_agrupado_por_Nombre["Cluster"] = dataset_agrupado_por_Nombre_escalado["Cluster"]
-dataset_agrupado_por_Nombre["Probabilidad de Rotacion"] = dataset_agrupado_por_Nombre["Cluster"].map({
+(dataset_agrupado_por_Nombre)["Probabilidad de Rotacion"] = dataset_agrupado_por_Nombre["Cluster"].map({
     2: "ALTA",
     0: "BAJA",
     1: "MEDIA"  # Corregido typo "MEDIA" (antes decía "MEDIA")
 })
+
+# NUEVO: Agregar columnas DESDE y HASTA con los valores min y max de "Ciclo"
+desde = dataset["Ciclo"].min()
+hasta = dataset["Ciclo"].max()
+dataset_agrupado_por_Nombre["DESDE"] = desde
+dataset_agrupado_por_Nombre["HASTA"] = hasta
+
 
 # Salida JSON
 if __name__ == "__main__":
