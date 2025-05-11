@@ -7,8 +7,7 @@ import logging
 
 
 app = Flask(__name__)
-DESDE = "202401"
-HASTA = "202412"
+
 
 # Configuración de Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -16,7 +15,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # Ruta al script K-Means (usando la ruta absoluta)
 KMEANS_SCRIPT = os.path.abspath("K-Means-Rotacion.py")
 
-def ejecutar_filtrado(DESDE, HASTA):
+def ejecutar_filtrado():
     """Ejecuta el script de filtrado sin necesidad de variables externas."""
     try:
         filtrar_dataset(DESDE, HASTA)
@@ -54,7 +53,7 @@ def kmeans_endpoint():
     """Endpoint para ejecutar el proceso K-Means luego del filtrado"""
     
     try:
-        if ejecutar_filtrado(DESDE, HASTA): #nuevo
+        if ejecutar_filtrado(): #nuevo
             resultado_kmeans = ejecutar_kmeans()
             return jsonify(resultado_kmeans), 200
         else:

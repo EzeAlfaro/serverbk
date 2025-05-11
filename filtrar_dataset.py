@@ -1,6 +1,9 @@
 import pandas as pd
 import os
 
+desde=  "202401"
+hasta = "202412"
+
 def filtrar_dataset(desde, hasta):
     archivo = "dataset_empleados_kmeans.xlsx"
     ruta_guardado = os.path.join(os.getcwd(), "dataset_empleados_filtrado.xlsx")
@@ -24,3 +27,4 @@ def filtrar_dataset(desde, hasta):
     df_filtrado.to_excel(ruta_guardado, index=False)
     print(f"✅ Archivo filtrado guardado con {len(df_filtrado)} filas.")
     print(f"🔽 El archivo se guardó en: {ruta_guardado}")
+    return True
