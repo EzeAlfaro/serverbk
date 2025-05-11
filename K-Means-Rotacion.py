@@ -96,7 +96,7 @@ columnas_ordenadas = [
 ]
 
 dataset_agrupado_por_Nombre = dataset_agrupado_por_Nombre[columnas_ordenadas]
-print(dataset_agrupado_por_Nombre.columns.tolist())  # Esto imprimirá el orden actual de las columnas
+
 
 # Salida JSON
 if __name__ == "__main__":
