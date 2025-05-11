@@ -82,6 +82,14 @@ hasta = dataset["Ciclo"].max()
 dataset_agrupado_por_Nombre["DESDE"] = desde
 dataset_agrupado_por_Nombre["HASTA"] = hasta
 
+columnas_ordenadas = [
+    "Nombre", "DESDE", "HASTA", "Cluster", "Probabilidad de Rotacion",
+    "Ausencias Injustificadas", "Llegadas tarde",
+    "Rendimiento ACTUAL_Alto", "Rendimiento ACTUAL_Bajo",
+    "Rendimiento ACTUAL_Medio", "Salidas tempranas"
+]
+
+dataset_agrupado_por_Nombre = dataset_agrupado_por_Nombre[columnas_ordenadas]
 
 # Salida JSON
 if __name__ == "__main__":
