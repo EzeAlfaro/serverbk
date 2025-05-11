@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # Ruta dataset
 ruta_dataset = os.path.join(os.path.dirname(__file__), "dataset_empleados_filtrado.xlsx")
-print(f"🟡 DEBUG: Buscando archivo en {ruta_dataset}")
+logging.info(f"🟡 DEBUG: Buscando archivo en {ruta_dataset}")
 
 # Intentar cargar dataset
 try:
@@ -85,7 +85,7 @@ try:
     }
 
     json_output = json.dumps(resultados, ensure_ascii=False)
-    print("🟢 DEBUG: JSON generado correctamente.")
+    logging.info("🟢 JSON generado correctamente.")
     print(json_output)
 
 except Exception as e:
