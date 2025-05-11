@@ -82,20 +82,18 @@ hasta = dataset["Ciclo"].max()
 dataset_agrupado_por_Nombre["DESDE"] = desde
 dataset_agrupado_por_Nombre["HASTA"] = hasta
 
-columnas_ordenadas = [
-    "Nombre", "DESDE", "HASTA", "Cluster", "Probabilidad de Rotacion",
-    "Ausencias Injustificadas", "Llegadas tarde",
-    "Rendimiento ACTUAL_Alto", "Rendimiento ACTUAL_Bajo",
-    "Rendimiento ACTUAL_Medio", "Salidas tempranas"
-]
-
-
-#se renombran columnas para que sea mas entendible
 dataset_agrupado_por_Nombre = dataset_agrupado_por_Nombre.rename(columns={
     "Rendimiento ACTUAL_Alto": "Rendimiento Alto",
     "Rendimiento ACTUAL_Bajo": "Rendimiento Bajo",
     "Rendimiento ACTUAL_Medio": "Rendimiento Medio"
 })
+
+# Reordenar columnas con los nuevos nombres
+columnas_ordenadas = [
+    "Nombre", "DESDE", "HASTA", "Cluster", "Probabilidad de Rotacion",
+    "Ausencias Injustificadas", "Llegadas tarde",
+    "Rendimiento Alto", "Rendimiento Bajo", "Rendimiento Medio", "Salidas tempranas"
+]
 
 dataset_agrupado_por_Nombre = dataset_agrupado_por_Nombre[columnas_ordenadas]
 
