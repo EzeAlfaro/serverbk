@@ -1,10 +1,11 @@
 import pandas as pd
 import os
 
-desde=  "202401"
-hasta = "202412"
 
-def filtrar_dataset(desde, hasta):
+
+def filtrar_dataset():
+    desde=  "202401"
+    hasta = "202412"
     archivo = "dataset_empleados_kmeans.xlsx"
     ruta_guardado = os.path.join(os.getcwd(), "dataset_empleados_filtrado.xlsx")
 
