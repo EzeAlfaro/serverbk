@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import sys
 
 def filtrar_dataset(desde, hasta):
 
@@ -28,3 +29,9 @@ def filtrar_dataset(desde, hasta):
                 df_filtrado.to_excel(ruta_guardado, index=False)
                 print(f"✅ Archivo filtrado guardado con {len(df_filtrado)} filas.")
                 print(f"🔽 El archivo se guardó en: {ruta_guardado}")
+                
+#para que filtrar_dataset.py pueda recibir parámetros
+if __name__ == "__main__":
+    desde = int(sys.argv[1])
+    hasta = int(sys.argv[2])
+    filtrar_dataset(desde, hasta)
