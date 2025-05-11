@@ -1,4 +1,4 @@
-from filtrar_dataset import filtrar_dataset
+
 from flask import Flask, request, jsonify, render_template
 import subprocess
 import json
@@ -14,11 +14,17 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # Ruta al script K-Means (usando la ruta absoluta)
 KMEANS_SCRIPT = os.path.abspath("K-Means-Rotacion.py")
+FILTRAR_SCRIPT = os.path.abspath("filtrar_dataset.py") #nuevo
 
 def ejecutar_filtrado():
     """Ejecuta el script de filtrado sin necesidad de variables externas."""
     try:
-        filtrar_dataset()
+        resultado = subprocess.run(
+            ['python', FILTRAR_SCRIPT, "202401", "202412"],  # Ejecutamos con parámetros
+            capture_output=True, 
+            text=True, 
+            check=True
+        )
         logging.info("✅ Filtrado ejecutado correctamente.")
         return True
     except Exception as e:
