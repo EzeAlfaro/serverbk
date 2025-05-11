@@ -4,35 +4,28 @@ import subprocess
 import json
 import os
 import logging
-import pandas as pd
+
 
 app = Flask(__name__)
-desde = "202401"
-hasta = "202412"
+DESDE = "202401"
+HASTA = "202412"
 
 # Configuración de Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Ruta al script K-Means (usando la ruta absoluta)
 KMEANS_SCRIPT = os.path.abspath("K-Means-Rotacion.py")
-# Añadimos la ruta al script de filtrado
-FILTRAR_SCRIPT = os.path.abspath("filtrar_dataset.py") #nuevo
 
-def ejecutar_filtrado(desde, hasta): #nuevo
+def ejecutar_filtrado(DESDE, HASTA):
     """Ejecuta el script de filtrado sin necesidad de variables externas."""
     try:
-        # Ejecutamos el script de filtrado
-        filtrar_dataset(desde, hasta)    
+        filtrar_dataset(DESDE, HASTA)
         logging.info("✅ Filtrado ejecutado correctamente.")
         return True
-
-    except subprocess.CalledProcessError as e:
-        logging.error(f"Error al ejecutar el filtrado: {e.stderr}")
-        return False
     except Exception as e:
         logging.error(f"Error general al ejecutar el filtrado: {e}")
         return False
-
+    
 def ejecutar_kmeans():
     """Ejecuta el script K-Means y captura la salida."""
     try:
@@ -61,7 +54,7 @@ def kmeans_endpoint():
     """Endpoint para ejecutar el proceso K-Means luego del filtrado"""
     
     try:
-        if ejecutar_filtrado(desde, hasta): #nuevo
+        if ejecutar_filtrado(DESDE, HASTA): #nuevo
             resultado_kmeans = ejecutar_kmeans()
             return jsonify(resultado_kmeans), 200
         else:
