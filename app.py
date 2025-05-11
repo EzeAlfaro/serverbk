@@ -61,7 +61,7 @@ def kmeans_endpoint():
     """Endpoint para ejecutar el proceso K-Means luego del filtrado"""
     
     try:
-        if ejecutar_filtrado(): #nuevo
+        if ejecutar_filtrado(desde, hasta): #nuevo
             resultado_kmeans = ejecutar_kmeans()
             return jsonify(resultado_kmeans), 200
         else:
