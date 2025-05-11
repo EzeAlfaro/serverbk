@@ -1,4 +1,4 @@
-import filtrar_dataset
+from filtrar_dataset import filtrar_dataset
 from flask import Flask, request, jsonify, render_template
 import subprocess
 import json
