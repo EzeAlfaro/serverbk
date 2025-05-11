@@ -20,7 +20,7 @@ def ejecutar_filtrado():
     """Ejecuta el script de filtrado sin necesidad de variables externas."""
     try:
         resultado = subprocess.run(
-            ['python', FILTRAR_SCRIPT, "202401", "202412"],  # Ejecutamos con parámetros
+            ['python', FILTRAR_SCRIPT],  # Ejecutamos sin parámetros
             capture_output=True, 
             text=True, 
             check=True
