@@ -91,6 +91,14 @@ columnas_ordenadas = [
 
 dataset_agrupado_por_Nombre = dataset_agrupado_por_Nombre[columnas_ordenadas]
 
+#se renombran columnas para que sea mas entendible
+dataset_agrupado_por_Nombre = dataset_agrupado_por_Nombre.rename(columns={
+    "Rendimiento ACTUAL_Alto": "Rendimiento Alto",
+    "Rendimiento ACTUAL_Bajo": "Rendimiento Bajo",
+    "Rendimiento ACTUAL_Medio": "Rendimiento Medio"
+})
+
+
 # Salida JSON
 if __name__ == "__main__":
     resultados = {
