@@ -77,15 +77,20 @@ def guardar_resultados():
     try:
         data = request.get_json()
         resultados = data.get('resultados', [])
+        
+        if not resultados:
+            app.logger.warning("⚠️ No llegaron resultados para guardar.")
+            return jsonify({"error": "No se recibieron datos para guardar"}), 400
 
         for resultado in resultados:
             db.collection('resultados_kmeans').add(resultado)
 
+        app.logger.info("✅ Resultados guardados correctamente en Firestore.")
         return jsonify({"message": "Datos guardados correctamente."}), 200
 
     except Exception as e:
+        app.logger.error(f"❌ Error al guardar en Firebase: {e}")
         return jsonify({"error": str(e)}), 500
-
 
 
 
