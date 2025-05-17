@@ -1,11 +1,15 @@
 import os
+import json
 import firebase_admin
 from firebase_admin import credentials, firestore
 
 def init_firebase():
-    ruta_actual = os.path.dirname(os.path.abspath(__file__))
-    ruta_clave = os.path.join(ruta_actual, "serviceAccountKey.json")
-    cred = credentials.Certificate(ruta_clave)
+    firebase_json = os.environ.get("FIREBASE_KEY")
+    if not firebase_json:
+        raise ValueError("La variable de entorno FIREBASE_KEY no está definida")
+    # Convertimos el string JSON a dict
+    cred_dict = json.loads(firebase_json)
+    cred = credentials.Certificate(cred_dict)
     firebase_admin.initialize_app(cred)
     return firestore.client()
 
