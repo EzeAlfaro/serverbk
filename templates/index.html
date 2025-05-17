@@ -35,12 +35,13 @@
 
   <script>
   let resultadosKMeans = [];
-  
+
   async function ejecutarKMeans() {
   const response = await fetch('/kmeans', { method: 'POST' });
   const data = await response.json();
   
   if (response.ok) {
+  resultadosKMeans = data.data;  // 🔹 Guardar los datos que llegaron  
   mostrarResultados(data.data);
   } else {
   document.getElementById('result').innerText = 'Error: ' + data.error;
