@@ -5,6 +5,7 @@ import subprocess
 import json
 import os
 import logging
+from config_firebase import db
 
 
 app = Flask(__name__)
