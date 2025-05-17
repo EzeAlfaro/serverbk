@@ -10,8 +10,11 @@ def init_firebase():
     if not os.path.exists(cred_path):
         raise FileNotFoundError(f"No se encontró el archivo de credenciales en: {cred_path}")
     
-    cred = credentials.Certificate(cred_path)
-    firebase_admin.initialize_app(cred)
+    # Solo inicializa si no hay una app ya creada
+    if not firebase_admin._apps:
+        cred = credentials.Certificate(cred_path)
+        firebase_admin.initialize_app(cred)
+
     return firestore.client()
 
 db = init_firebase()
