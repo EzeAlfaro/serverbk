@@ -79,7 +79,7 @@
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ resultados: resultadosKMeans }) // Enviamos los datos que ya se mostraron
+      body: JSON.stringify({ resultados: [resultadosKMeans[0]] }) // Enviamos los datos que ya se mostraron
     });
 
     const data = await res.json();
