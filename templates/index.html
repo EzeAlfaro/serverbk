@@ -28,11 +28,14 @@
   
   <div id="result">
   <button onclick="ejecutarKMeans()">Ejecutar K-Means</button>
+   <button onclick="guardarFirebase()">Guardar en Firebase</button>
   <div id="tabla-container"></div>
   </div>
  
 
   <script>
+  let resultadosKMeans = [];
+  
   async function ejecutarKMeans() {
   const response = await fetch('/kmeans', { method: 'POST' });
   const data = await response.json();
@@ -65,6 +68,28 @@
   tablaHTML += '</tbody></table>';
   document.getElementById('tabla-container').innerHTML = tablaHTML;
   }
+
+
+  async function guardarFirebase() {
+    const res = await fetch('/guardar_resultados', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ resultados: resultadosKMeans }) // Enviamos los datos que ya se mostraron
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert("✅ Datos guardados en Firebase.");
+    } else {
+      alert("❌ Error: " + data.error);
+    }
+  }
+
+
+
+
   </script>
  </body>
  </html>
