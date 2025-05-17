@@ -72,23 +72,37 @@
 
 
   async function guardarFirebase() {
+  if (resultadosKMeans.length === 0) {
+    alert("⚠️ Primero ejecutá K-Means antes de guardar.");
+    return;
+  }
+
   console.log("🔥 ENVIANDO A FIREBASE:", resultadosKMeans);
 
-    const res = await fetch('/guardar_resultados', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ resultados: [resultadosKMeans[4]] }) // Enviamos los datos que ya se mostraron
-    });
+  const res = await fetch('/guardar_resultados', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ resultados: resultadosKMeans }) // 👈 Todos los datos
+  });
 
-    const data = await res.json();
-    if (res.ok) {
-      alert("✅ Datos guardados en Firebase.");
-    } else {
-      alert("❌ Error: " + data.error);
-    }
+  let data = {};
+  try {
+    data = await res.json();
+  } catch (e) {
+    console.error("❌ Error parseando JSON:", e);
+    alert("❌ Error inesperado al guardar.");
+    return;
   }
+
+  if (res.ok) {
+    alert("✅ Datos guardados en Firebase.");
+  } else {
+    alert("❌ Error: " + (data.error || "Error desconocido"));
+  }
+}
+
 
 
 
