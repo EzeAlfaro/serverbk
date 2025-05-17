@@ -69,6 +69,24 @@ def kmeans_endpoint():
         
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/guardar_resultados', methods=['POST'])
+def guardar_resultados():
+    try:
+        data = request.get_json()
+        resultados = data.get('resultados', [])
+
+        for resultado in resultados:
+            db.collection('resultados_kmeans').add(resultado)
+
+        return jsonify({"message": "Datos guardados correctamente."}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
