@@ -75,6 +75,7 @@ def kmeans_endpoint():
 @app.route('/guardar_resultados', methods=['POST'])
 def guardar_resultados():
     try:
+        print("Existe archivo firebase?", os.path.exists('/opt/render/project/src/firebase-service.json'))
         data = request.get_json()
         if data is None:
             print("❌ No se recibió JSON.")
