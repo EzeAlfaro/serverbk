@@ -72,6 +72,8 @@
 
 
   async function guardarFirebase() {
+  console.log("🔥 ENVIANDO A FIREBASE:", resultadosKMeans);
+
     const res = await fetch('/guardar_resultados', {
       method: 'POST',
       headers: {
