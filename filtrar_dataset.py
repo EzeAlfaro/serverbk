@@ -26,7 +26,15 @@ else:
         if df_filtrado.empty:
             print("⚠️ No se encontraron filas dentro del rango especificado.")
         else:
-            # Guardar el nuevo archivo
+            # Si ya existe el archivo filtrado, borrarlo para evitar errores
+            if os.path.exists(ruta_guardado):
+                try:
+                    os.remove(ruta_guardado)
+                    print("🗑️ Archivo existente eliminado antes de guardar el nuevo.")
+                except Exception as e:
+                    print(f"❌ No se pudo eliminar el archivo existente: {e}")
+
+            # Guardar el nuevo archivo filtrado
             df_filtrado.to_excel(ruta_guardado, index=False)
             print(f"✅ Archivo filtrado guardado con {len(df_filtrado)} filas.")
             print(f"🔽 El archivo se guardó en: {ruta_guardado}")
