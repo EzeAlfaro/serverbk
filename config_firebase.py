@@ -4,7 +4,7 @@ from firebase_admin import credentials, firestore
 
 def init_firebase():
     # Ruta relativa o absoluta al archivo
-    cred_path = os.path.join(os.path.dirname(__file__), 'firebase_key.json')
+    cred_path = os.path.join(os.path.dirname(__file__), 'firebase-service.json')
     
     if not os.path.exists(cred_path):
         raise FileNotFoundError(f"No se encontró el archivo de credenciales en: {cred_path}")
