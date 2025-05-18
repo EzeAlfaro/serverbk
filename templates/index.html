@@ -59,15 +59,17 @@
 
   const data = await response.json();
   
-  if (response.ok) {
-    resultadosKMeans = data;  
-    mostrarResultados(data);
-  } else {
-    document.getElementById('result').innerText = 'Error: ' + data.error;
+if (response.ok) {
+  if (!Array.isArray(data.data)) {
+    console.error("⚠️ Formato inesperado:", data);
+    alert("❌ La respuesta no tiene formato esperado.");
+    return;
   }
-}
- 
 
+  resultadosKMeans = data.data;  
+  mostrarResultados(data.data);
+}
+  }
   function mostrarResultados(data) {
   let tablaHTML = '<table><thead><tr>';
   for (const key in data[0]) {

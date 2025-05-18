@@ -65,10 +65,11 @@ def kmeans_endpoint():
 
     try:
         resultado_kmeans = ejecutar_kmeans()
-        return jsonify({"data": resultado_kmeans}), 200
+        # resultado_kmeans ya tiene la estructura {"data": [...]}
+        # Por eso acá devolvemos directo el resultado sin envolverlo de nuevo
+        return jsonify(resultado_kmeans), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
 
 @app.route('/guardar_resultados', methods=['POST'])
 def guardar_resultados():
