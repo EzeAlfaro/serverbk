@@ -6,6 +6,7 @@ import json
 import os
 import logging
 from config_firebase import db
+import pandas as pd
 
 
 app = Flask(__name__)
