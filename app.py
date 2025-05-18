@@ -18,22 +18,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # Ruta al script K-Means (usando la ruta absoluta)
 KMEANS_SCRIPT = os.path.abspath("K-Means-Rotacion.py")
-FILTRAR_SCRIPT = os.path.abspath("filtrar_dataset.py") #nuevo
 
-def ejecutar_filtrado():
-    """Ejecuta el script de filtrado sin necesidad de variables externas."""
-    try:
-        resultado = subprocess.run(
-            ['python', FILTRAR_SCRIPT],  # Ejecutamos sin parámetros
-            capture_output=True, 
-            text=True, 
-            check=True
-        )
-        logging.info("✅ Filtrado ejecutado correctamente.")
-        return True
-    except Exception as e:
-        logging.error(f"Error general al ejecutar el filtrado: {e}")
-        return False
+
     
 def ejecutar_kmeans():
     """Ejecuta el script K-Means y captura la salida."""
@@ -60,15 +46,26 @@ def index():
 
 @app.route('/kmeans', methods=['POST'])
 def kmeans_endpoint():
-    """Endpoint para ejecutar el proceso K-Means luego del filtrado"""
-    
+    data = request.get_json()
+    desde = data.get('desde')
+    hasta = data.get('hasta')
+
+    if desde is None or hasta is None:
+        return jsonify({"error": "Faltan parámetros 'desde' o 'hasta'"}), 400
+
     try:
-        if ejecutar_filtrado(): #nuevo
-            resultado_kmeans = ejecutar_kmeans()
-            return jsonify(resultado_kmeans), 200
-        else:
-            return jsonify({"error": "No se pudo ejecutar el filtrado correctamente."}), 500
-        
+        desde = int(desde)
+        hasta = int(hasta)
+    except ValueError:
+        return jsonify({"error": "Parámetros 'desde' y 'hasta' deben ser enteros"}), 400
+    
+    filtro = filtrar_dataset(desde, hasta)
+    if "error" in filtro:
+        return jsonify(filtro), 400
+
+    try:
+        resultado_kmeans = ejecutar_kmeans()
+        return jsonify(resultado_kmeans), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
@@ -110,6 +107,34 @@ def obtener_ciclos():
     ciclos_unicos = sorted(df["Ciclo"].dropna().unique().tolist())
 
     return jsonify(ciclos_unicos), 200
+
+
+
+def filtrar_dataset(desde, hasta):
+    archivo = "dataset_empleados_kmeans.xlsx"
+    ruta_guardado = os.path.join(os.getcwd(), "dataset_empleados_filtrado.xlsx")
+
+    if not os.path.exists(archivo):
+        return {"error": "Archivo no encontrado"}
+
+    df = pd.read_excel(archivo)
+    if "Ciclo" not in df.columns:
+        return {"error": "La columna 'Ciclo' no existe"}
+
+    df_filtrado = df[(df["Ciclo"] >= desde) & (df["Ciclo"] <= hasta)]
+
+    if df_filtrado.empty:
+        return {"error": "No hay filas en el rango especificado"}
+
+    if os.path.exists(ruta_guardado):
+        try:
+            os.remove(ruta_guardado)
+        except Exception as e:
+            return {"error": f"No se pudo eliminar el archivo previo: {e}"}
+
+    df_filtrado.to_excel(ruta_guardado, index=False)
+    return {"ok": f"Archivo guardado con {len(df_filtrado)} filas"}
+
 
 if __name__ == '__main__':
     app.run(debug=True)
