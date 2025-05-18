@@ -64,8 +64,8 @@
   const data = await response.json();
   
   if (response.ok) {
-    resultadosKMeans = data.data;  
-    mostrarResultados(data.data);
+    resultadosKMeans = data;  
+    mostrarResultados(data);
   } else {
     document.getElementById('result').innerText = 'Error: ' + data.error;
   }
