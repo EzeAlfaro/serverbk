@@ -27,6 +27,23 @@
  <body>
   
   <div id="result">
+
+  <label for="desde">Desde:</label>
+  <select id="desde"></select>
+
+  <label for="hasta">Hasta:</label>
+  <select id="hasta"></select>
+
+  <br><br>
+
+  <button onclick="ejecutarKMeans()">Ejecutar K-Means</button>
+  <button onclick="guardarFirebase()">Guardar en Firebase</button>
+
+  <div id="tabla-container"></div>
+</div>
+
+
+  <div id="result">
   <button onclick="ejecutarKMeans()">Ejecutar K-Means</button>
    <button onclick="guardarFirebase()">Guardar en Firebase</button>
   <div id="tabla-container"></div>
@@ -102,6 +119,45 @@
     alert("❌ Error: " + (data.error || "Error desconocido"));
   }
 }
+
+
+
+
+async function cargarCiclos() {
+  try {
+    const res = await fetch('/ciclos');
+    if (!res.ok) throw new Error('Error al obtener ciclos');
+
+    const ciclos = await res.json();
+
+    const desdeSelect = document.getElementById('desde');
+    const hastaSelect = document.getElementById('hasta');
+
+    ciclos.forEach(ciclo => {
+      const optionDesde = document.createElement('option');
+      optionDesde.value = ciclo;
+      optionDesde.textContent = ciclo;
+      desdeSelect.appendChild(optionDesde);
+
+      const optionHasta = document.createElement('option');
+      optionHasta.value = ciclo;
+      optionHasta.textContent = ciclo;
+      hastaSelect.appendChild(optionHasta);
+    });
+
+    // Opcional: seleccionar por defecto el primer y último valor
+    desdeSelect.value = ciclos[0];
+    hastaSelect.value = ciclos[ciclos.length - 1];
+
+  } catch (error) {
+    console.error(error);
+    alert('No se pudieron cargar los ciclos.');
+  }
+}
+
+// Ejecutar al cargar la página
+window.onload = cargarCiclos;
+
 
 
 
