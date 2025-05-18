@@ -94,7 +94,21 @@ def guardar_resultados():
         print(f"❌ Error al guardar en Firebase: {e}")
         return jsonify({"error": str(e)}), 500
 
+@app.route('/ciclos', methods=['GET'])
+def obtener_ciclos():
+    archivo = "dataset_empleados_kmeans.xlsx"
 
+    if not os.path.exists(archivo):
+        return jsonify({"error": f"Archivo no encontrado: {archivo}"}), 404
+
+    df = pd.read_excel(archivo)
+
+    if "Ciclo" not in df.columns:
+        return jsonify({"error": "La columna 'Ciclo' no existe en el dataset."}), 400
+
+    ciclos_unicos = sorted(df["Ciclo"].dropna().unique().tolist())
+
+    return jsonify(ciclos_unicos), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
