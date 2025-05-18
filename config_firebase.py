@@ -1,16 +1,20 @@
 import os
-import json
 import firebase_admin
 from firebase_admin import credentials, firestore
 
 def init_firebase():
-    key_json = os.getenv("FIREBASE_KEY")
-    if not key_json:
-        raise ValueError("La variable de entorno FIREBASE_KEY no está definida")
+    # Ruta relativa o absoluta al archivo
+    cred_path = os.path.join(os.path.dirname(__file__), 'firebase-service.json')
+    print("Ruta a credenciales:", cred_path) 
+    
+    if not os.path.exists(cred_path):
+        raise FileNotFoundError(f"No se encontró el archivo de credenciales en: {cred_path}")
+    
+    # Solo inicializa si no hay una app ya creada
+    if not firebase_admin._apps:
+        cred = credentials.Certificate(cred_path)
+        firebase_admin.initialize_app(cred)
 
-    cred_dict = json.loads(key_json)
-    cred = credentials.Certificate(cred_dict)
-    firebase_admin.initialize_app(cred)
     return firestore.client()
 
 db = init_firebase()
