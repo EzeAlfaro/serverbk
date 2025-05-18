@@ -57,7 +57,7 @@ try:
     # Mapeo
     dataset_agrupado_por_Nombre["Cluster"] = dataset_agrupado_por_Nombre_escalado["Cluster"]
     dataset_agrupado_por_Nombre["Probabilidad de Rotacion"] = dataset_agrupado_por_Nombre["Cluster"].map({
-        2: "ALTA", 0: "BAJA", 1: "MEDIA"
+        2: "MEDIA", 0: "BAJA", 1: "ALTA"
     })
 
     dataset_agrupado_por_Nombre["DESDE"] = dataset["Ciclo"].min()
@@ -83,6 +83,8 @@ try:
         "clusters": n_clusters,
         "status": "success"
     }
+
+    #dataset_agrupado_por_Nombre.to_excel("resultado_clusters.xlsx", index=False)
 
     json_output = json.dumps(resultados, ensure_ascii=False)
     logging.info("🟢 JSON generado correctamente.")
