@@ -52,16 +52,24 @@
   let resultadosKMeans = [];
 
   async function ejecutarKMeans() {
-  const response = await fetch('/kmeans', { method: 'POST' });
+  const desde = document.getElementById('desde').value;
+  const hasta = document.getElementById('hasta').value;
+
+  const response = await fetch('/kmeans', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ desde, hasta })
+  });
+
   const data = await response.json();
   
   if (response.ok) {
-  resultadosKMeans = data.data;  // 🔹 Guardar los datos que llegaron  
-  mostrarResultados(data.data);
+    resultadosKMeans = data.data;  
+    mostrarResultados(data.data);
   } else {
-  document.getElementById('result').innerText = 'Error: ' + data.error;
+    document.getElementById('result').innerText = 'Error: ' + data.error;
   }
-  }
+}
  
 
   function mostrarResultados(data) {

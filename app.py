@@ -65,7 +65,7 @@ def kmeans_endpoint():
 
     try:
         resultado_kmeans = ejecutar_kmeans()
-        return jsonify(resultado_kmeans), 200
+        return jsonify({"data": resultado_kmeans}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
