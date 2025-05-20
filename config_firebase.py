@@ -1,20 +1,11 @@
 import os
-import firebase_admin
-from firebase_admin import credentials, firestore
+import json
+from firebase_admin import credentials, initialize_app, firestore
 
-def init_firebase():
-    # Ruta relativa o absoluta al archivo
-    cred_path = os.path.join(os.path.dirname(__file__), 'firebase-service.json')
-    print("Ruta a credenciales:", cred_path) 
-    
-    if not os.path.exists(cred_path):
-        raise FileNotFoundError(f"No se encontró el archivo de credenciales en: {cred_path}")
-    
-    # Solo inicializa si no hay una app ya creada
-    if not firebase_admin._apps:
-        cred = credentials.Certificate(cred_path)
-        firebase_admin.initialize_app(cred)
+json_str = os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON']
+json_data = json.loads(json_str.replace('\\n', '\n'))
 
-    return firestore.client()
+cred = credentials.Certificate(json_data)
+initialize_app(cred)
 
-db = init_firebase()
+db = firestore.client()
