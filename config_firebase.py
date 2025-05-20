@@ -1,11 +1,12 @@
 import os
-import json
-from firebase_admin import credentials, initialize_app, firestore
+import firebase_admin
+from firebase_admin import credentials, firestore
 
-json_str = os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON']
-json_data = json.loads(json_str.replace('\\n', '\n'))
+def init_firebase():
+    ruta_actual = os.path.dirname(os.path.abspath(__file__))
+    ruta_clave = os.path.join(ruta_actual, "serviceAccountKey.json")
+    cred = credentials.Certificate(ruta_clave)
+    firebase_admin.initialize_app(cred)
+    return firestore.client()
 
-cred = credentials.Certificate(json_data)
-initialize_app(cred)
-
-db = firestore.client()
+db = init_firebase()
