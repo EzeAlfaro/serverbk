@@ -1,7 +1,7 @@
 
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from K-Means-Rotacion import ejecutar_kmeans
+from K_Means_Rotacion import ejecutar_kmeans
 import json
 import os
 import logging
