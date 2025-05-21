@@ -6,6 +6,7 @@ import json
 import os
 import logging
 from config_postgres import get_connection
+from psycopg2.extras import execute_values
 import pandas as pd
 
 
