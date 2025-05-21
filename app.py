@@ -1,7 +1,7 @@
 
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from K_Means_Rotacion import ejecutar_kmeans
+from K-Means-Rotacion import ejecutar_kmeans
 import json
 import os
 import logging
@@ -16,12 +16,6 @@ CORS(app)
 
 # Configuración de Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-# Ruta al script K-Means (usando la ruta absoluta)
-KMEANS_SCRIPT = os.path.abspath("K-Means-Rotacion.py")
-
-
-    
 
 
 @app.route('/', methods=['GET'])
