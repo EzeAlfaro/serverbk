@@ -71,19 +71,7 @@ def kmeans_endpoint():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-from flask import request, jsonify
-import psycopg2
-from psycopg2.extras import execute_values
 
-def get_connection():
-    return psycopg2.connect(
-        host="ainabi-ainabi.g.aivencloud.com",
-        port=14186,
-        database="defaultdb",
-        user="avnadmin",
-        password="AVNS_-cITT1QVqP0nWCD-E9E",
-        sslmode="require"
-    )
 
 @app.route('/guardar_resultados', methods=['POST'])
 def guardar_resultados():
@@ -174,4 +162,4 @@ def filtrar_dataset(desde, hasta):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
