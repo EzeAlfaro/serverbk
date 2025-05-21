@@ -102,7 +102,7 @@ def guardar_resultados():
                 d['Rendimiento Medio'],
                 d['Salidas tempranas'],
                 d['Cluster'],
-                d['Probabilidad de Rotación']
+                d['Probabilidad de Rotacion']
             ) for d in datos
         ]
 

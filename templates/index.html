@@ -37,7 +37,7 @@
   <br><br>
 
   <button onclick="ejecutarKMeans()">Ejecutar K-Means</button>
-  <button onclick="guardarFirebase()">Guardar en PostgreSQL</button>
+  <button onclick="guardar()">Guardar en PostgreSQL</button>
 
   <div id="tabla-container"></div>
 </div>
@@ -92,7 +92,7 @@ if (response.ok) {
   }
 
 
-  async function guardarFirebase() {
+  async function guardar() {
   if (resultadosKMeans.length === 0) {
     alert("⚠️ Primero ejecutá K-Means antes de guardar.");
     return;
