@@ -8,7 +8,7 @@ import logging
 from config_postgres import get_connection
 from psycopg2.extras import execute_values
 import pandas as pd
-
+import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -136,11 +136,11 @@ def filtrar_dataset(desde, hasta):
     return {"ok": f"Archivo guardado con {len(df_filtrado)} filas"}
 
 
+
 @app.route('/mi-ip-publica')
 def mi_ip_publica():
     ip = requests.get('https://api.ipify.org').text
     return f"Mi IP pública es: {ip}"
-
 
 
 if __name__ == '__main__':
