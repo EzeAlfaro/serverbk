@@ -97,9 +97,9 @@ def guardar_resultados():
                 d['Nombre'],
                 d['Ausencias Injustificadas'],
                 d['Llegadas tarde'],
-                d['Rendimiento ACTUAL_Alto'],
-                d['Rendimiento ACTUAL_Bajo'],
-                d['Rendimiento ACTUAL_Medio'],
+                d['Rendimiento Alto'],
+                d['Rendimiento Bajo'],
+                d['Rendimiento Medio'],
                 d['Salidas tempranas'],
                 d['Cluster'],
                 d['Probabilidad de Rotación']
