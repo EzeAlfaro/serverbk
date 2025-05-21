@@ -37,7 +37,7 @@
   <br><br>
 
   <button onclick="ejecutarKMeans()">Ejecutar K-Means</button>
-  <button onclick="guardarFirebase()">Guardar en Firebase</button>
+  <button onclick="guardarFirebase()">Guardar en PostgreSQL</button>
 
   <div id="tabla-container"></div>
 </div>
@@ -98,7 +98,7 @@ if (response.ok) {
     return;
   }
 
-  console.log("🔥 ENVIANDO A FIREBASE:", resultadosKMeans);
+  console.log("🔥 ENVIANDO A PostgreSQL:", resultadosKMeans);
 
   const res = await fetch('/guardar_resultados', {
     method: 'POST',
@@ -118,7 +118,7 @@ if (response.ok) {
   }
 
   if (res.ok) {
-    alert("✅ Datos guardados en Firebase.");
+    alert("✅ Datos guardados en PostgreSQL.");
   } else {
     alert("❌ Error: " + (data.error || "Error desconocido"));
   }

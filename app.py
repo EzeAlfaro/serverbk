@@ -5,7 +5,7 @@ import subprocess
 import json
 import os
 import logging
-from config_firebase import db
+from config_postgres import get_connection
 import pandas as pd
 
 
@@ -71,27 +71,63 @@ def kmeans_endpoint():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+from flask import request, jsonify
+import psycopg2
+from psycopg2.extras import execute_values
+
+def get_connection():
+    return psycopg2.connect(
+        host="ainabi-ainabi.g.aivencloud.com",
+        port=14186,
+        database="defaultdb",
+        user="avnadmin",
+        password="AVNS_-cITT1QVqP0nWCD-E9E",
+        sslmode="require"
+    )
+
 @app.route('/guardar_resultados', methods=['POST'])
 def guardar_resultados():
+    datos = request.json.get('resultados')
+    if not datos:
+        return jsonify({"error": "No hay datos para guardar"}), 400
+    
+    # Conexión y query para insertar varios registros rápido
     try:
-        print("Existe archivo firebase?", os.path.exists('/opt/render/project/src/firebase-service.json'))
-        data = request.get_json()
-        if data is None:
-            print("❌ No se recibió JSON.")
-            return jsonify({"error": "No se recibió JSON válido"}), 400
+        conn = get_connection()
+        cursor = conn.cursor()
 
-        resultados = data.get('resultados', [])
-        print(f"📥 Recibidos {len(resultados)} resultados para guardar.")
+        # Asumiendo que cada dict en datos tiene las columnas: Nombre, AusenciasInjustificadas, etc.
+        # Ajustá los nombres y orden según tu tabla
+        query = """
+            INSERT INTO resultados_kmeans 
+            (nombre, ausencias_injustificadas, llegadas_tarde, rendimiento_alto, rendimiento_bajo, rendimiento_medio, salidas_tempranas, cluster, probabilidad_rotacion)
+            VALUES %s
+        """
+        
+        valores = [
+            (
+                d['Nombre'],
+                d['Ausencias Injustificadas'],
+                d['Llegadas tarde'],
+                d['Rendimiento ACTUAL_Alto'],
+                d['Rendimiento ACTUAL_Bajo'],
+                d['Rendimiento ACTUAL_Medio'],
+                d['Salidas tempranas'],
+                d['Cluster'],
+                d['Probabilidad de Rotación']
+            ) for d in datos
+        ]
 
-        for resultado in resultados:
-            db.collection('resultados_kmeans').add(resultado)
+        execute_values(cursor, query, valores)
+        conn.commit()
+        cursor.close()
+        conn.close()
 
-        print("✅ Datos guardados correctamente.")
-        return jsonify({"message": "Datos guardados correctamente."}), 200
+        return jsonify({"mensaje": "Datos guardados en PostgreSQL exitosamente"}), 200
 
     except Exception as e:
-        print(f"❌ Error al guardar en Firebase: {e}")
         return jsonify({"error": str(e)}), 500
+
 
 @app.route('/ciclos', methods=['GET'])
 def obtener_ciclos():
