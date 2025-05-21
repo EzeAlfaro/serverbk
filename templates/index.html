@@ -92,7 +92,7 @@ if (response.ok) {
   }
 
 
-  async function guardar() {
+async function guardar() {
   if (resultadosKMeans.length === 0) {
     alert("⚠️ Primero ejecutá K-Means antes de guardar.");
     return;
@@ -105,14 +105,19 @@ if (response.ok) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ resultados: resultadosKMeans }) // 👈 Todos los datos
+    body: JSON.stringify({ resultados: resultadosKMeans })
   });
 
-  let data = {};
+  console.log("Status:", res.status, "OK?", res.ok);
+
+  const text = await res.text();
+  console.log("Respuesta raw:", text);
+
+  let data;
   try {
-    data = await res.json();
+    data = JSON.parse(text);
   } catch (e) {
-    console.error("❌ Error parseando JSON:", e);
+    console.error("❌ Error parseando JSON:", e, text);
     alert("❌ Error inesperado al guardar.");
     return;
   }
