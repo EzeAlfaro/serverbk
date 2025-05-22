@@ -47,7 +47,7 @@ def ejecutar_kmeans():
         # Mapeo
         dataset_agrupado_por_Nombre["Cluster"] = dataset_agrupado_por_Nombre_escalado["Cluster"]
         dataset_agrupado_por_Nombre["Probabilidad de Rotacion"] = dataset_agrupado_por_Nombre["Cluster"].map({
-            2: "MEDIA", 0: "BAJA", 1: "ALTA"
+            2: "ALTA", 0: "BAJA", 1: "MEDIA"
         })
 
         dataset_agrupado_por_Nombre["DESDE"] = dataset["Ciclo"].min()
