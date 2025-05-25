@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from K_Means_Rotacion import ejecutar_kmeans
@@ -21,6 +20,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
+
+@app.route('/reporteria')
+def reporteria():
+    return render_template('reporteria.html')
 
 @app.route('/kmeans', methods=['POST'])
 def kmeans_endpoint():
@@ -144,4 +147,4 @@ def mi_ip_publica():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, port=5000)

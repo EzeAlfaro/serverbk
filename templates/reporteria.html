@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AINABI - Reportería</title>
+    <style>
+        :root {
+            --primary-color: #8B7355;
+            --secondary-color: #97B19C;
+            --background-color: #FDF5E6;
+            --text-color: #4A4A4A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background-color);
+        }
+
+        nav {
+            background-color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .reports-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .report-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .report-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .report-card p {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .report-section {
+            display: none;
+            padding: 2rem;
+            margin-top: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .report-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .report-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .metric-card {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary-color);
+        }
+
+        .metabase-container {
+            width: 100%;
+            min-height: 600px;
+            margin-top: 2rem;
+            border: none;
+            border-radius: 10px;
+            background: #f5f5f5;
+            overflow: hidden; /* Para el iframe */
+        }
+
+        .metabase-iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">AINABI</div>
+        <div class="nav-links">
+            <a href="/">Inicio</a>
+            <a href="/reporteria">Reportería</a>
+            <a href="/contacto">Contacto</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="hero">
+            <h1>Reportería Inteligente</h1>
+            <p>Desempeño Predecible, Éxito Inevitable - Visualiza y analiza datos de recursos humanos de manera inteligente</p>
+        </div>
+
+        <div class="reports-container">
+            <div class="report-card">
+                <h3>Reportería de K-means</h3>
+                <p>Análisis de clusters y predicción de rotación de personal mediante algoritmos de agrupamiento.</p>
+                <a href="#kmeans-section" class="btn" onclick="showReport('kmeans')">Ver Reporte</a>
+            </div>
+
+            <div class="report-card">
+                <h3>Reportería de Regresión</h3>
+                <p>Análisis predictivo y tendencias mediante modelos de regresión para recursos humanos.</p>
+                <a href="#regression-section" class="btn" onclick="showReport('regression')">Ver Reporte</a>
+            </div>
+        </div>
+
+        <div id="kmeans-section" class="report-section">
+            <h2>Análisis de Clusters - K-means</h2>
+            <div class="report-grid">
+                <div class="metric-card">
+                    <h3>Total Empleados Analizados</h3>
+                    <div class="metric-value">324</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Clusters Identificados</h3>
+                    <div class="metric-value">4</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Precisión del Modelo</h3>
+                    <div class="metric-value">92%</div>
+                </div>
+            </div>
+            <div class="metabase-container">
+                <!-- Ejemplo de cómo quedará el iframe de Metabase -->
+                <iframe
+                    src="http://54.172.128.185:3000/public/dashboard/tu-dashboard-id"
+                    frameborder="0"
+                    width="100%"
+                    height="600"
+                    allowtransparency
+                    class="metabase-iframe"
+                ></iframe>
+            </div>
+        </div>
+
+        <div id="regression-section" class="report-section">
+            <h2>Análisis de Regresión</h2>
+            <div class="metabase-container">
+                <!-- Ejemplo de cómo quedará el iframe de Metabase -->
+                <iframe
+                    src="http://54.172.128.185:3000/public/dashboard/tu-dashboard-id"
+                    frameborder="0"
+                    width="100%"
+                    height="600"
+                    allowtransparency
+                    class="metabase-iframe"
+                ></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="back-to-top" onclick="scrollToTop()">↑</div>
+
+    <script>
+        function showReport(type) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.report-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Mostrar la sección seleccionada
+            const section = document.getElementById(`${type}-section`);
+            if (section) {
+                setTimeout(() => {
+                    section.classList.add('active');
+                }, 100);
+            }
+        }
+
+        // Mostrar/ocultar botón "volver arriba"
+        window.onscroll = function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html> 
