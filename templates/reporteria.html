@@ -232,27 +232,12 @@
 
         <div id="kmeans-section" class="report-section">
             <h2>Análisis de Clusters - K-means</h2>
-            <div class="report-grid">
-                <div class="metric-card">
-                    <h3>Total Empleados Analizados</h3>
-                    <div class="metric-value">324</div>
-                </div>
-                <div class="metric-card">
-                    <h3>Clusters Identificados</h3>
-                    <div class="metric-value">4</div>
-                </div>
-                <div class="metric-card">
-                    <h3>Precisión del Modelo</h3>
-                    <div class="metric-value">92%</div>
-                </div>
-            </div>
             <div class="metabase-container">
-                <!-- Ejemplo de cómo quedará el iframe de Metabase -->
                 <iframe
-                    src="http://54.172.128.185:3000/public/dashboard/tu-dashboard-id"
+                    src="http://54.172.128.185:3000/public/dashboard/2b2b50bf-33dc-40db-895f-13c263adb0c6"
                     frameborder="0"
                     width="100%"
-                    height="600"
+                    height="800"
                     allowtransparency
                     class="metabase-iframe"
                 ></iframe>
@@ -262,15 +247,8 @@
         <div id="regression-section" class="report-section">
             <h2>Análisis de Regresión</h2>
             <div class="metabase-container">
-                <!-- Ejemplo de cómo quedará el iframe de Metabase -->
-                <iframe
-                    src="http://54.172.128.185:3000/public/dashboard/tu-dashboard-id"
-                    frameborder="0"
-                    width="100%"
-                    height="600"
-                    allowtransparency
-                    class="metabase-iframe"
-                ></iframe>
+                <!-- Aquí irá el futuro dashboard de regresión -->
+                <h3 style="text-align: center; padding: 2rem;">Espacio reservado para el dashboard de Regresión</h3>
             </div>
         </div>
     </div>
@@ -279,12 +257,10 @@
 
     <script>
         function showReport(type) {
-            // Ocultar todas las secciones
             document.querySelectorAll('.report-section').forEach(section => {
                 section.classList.remove('active');
             });
 
-            // Mostrar la sección seleccionada
             const section = document.getElementById(`${type}-section`);
             if (section) {
                 setTimeout(() => {
@@ -293,7 +269,6 @@
             }
         }
 
-        // Mostrar/ocultar botón "volver arriba"
         window.onscroll = function() {
             const backToTop = document.querySelector('.back-to-top');
             if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
