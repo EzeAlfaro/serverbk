@@ -154,5 +154,31 @@ def mi_ip_publica():
     return f"Mi IP pública es: {ip}"
 
 
+@app.route('/api/metabase_card/<int:card_id>', methods=['GET'])
+def metabase_card(card_id):
+    METABASE_URL = "http://54.172.128.185:3000"
+    METABASE_USER = "ceciliactorales@gmail.com"
+    METABASE_PASS = "MortyRica2025"
+
+    # Autenticación
+    auth_res = requests.post(f"{METABASE_URL}/api/session", json={
+        "username": METABASE_USER,
+        "password": METABASE_PASS
+    })
+    if not auth_res.ok:
+        return jsonify({"error": "No se pudo autenticar con Metabase"}), 500
+
+    token = auth_res.json()['id']
+
+    # Consulta la tarjeta
+    headers = {"X-Metabase-Session": token}
+    query_res = requests.get(f"{METABASE_URL}/api/card/{card_id}/query/json", headers=headers)
+
+    if not query_res.ok:
+        return jsonify({"error": "No se pudo obtener datos de Metabase"}), 500
+
+    return jsonify(query_res.json())
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

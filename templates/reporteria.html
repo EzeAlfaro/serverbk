@@ -233,14 +233,9 @@
         <div id="kmeans-section" class="report-section">
             <h2>Análisis de Clusters - K-means</h2>
             <div class="metabase-container">
-                <iframe
-                    src="http://54.172.128.185:3000/public/dashboard/2b2b50bf-33dc-40db-895f-13c263adb0c6"
-                    frameborder="0"
-                    width="100%"
-                    height="800"
-                    allowtransparency
-                    class="metabase-iframe"
-                ></iframe>
+                <!-- Botón y resultados de KMeans desde la API -->
+                <button onclick="verReporteKMeans()">Ver Reporte</button>
+                <div id="ml-resultados"></div>
             </div>
         </div>
 
@@ -283,6 +278,36 @@
                 top: 0,
                 behavior: 'smooth'
             });
+        }
+
+        async function verReporteKMeans() {
+            const res = await fetch("https://testkmeans.onrender.com/api/metabase_card/46");
+            const data = await res.json();
+
+            if (!Array.isArray(data) || data.length === 0) {
+                document.getElementById("ml-resultados").innerHTML = "No hay datos para mostrar.";
+                return;
+            }
+
+            // Construir la tabla HTML
+            let tabla = "<table border='1' style='border-collapse:collapse; margin-top:10px;'>";
+            // Encabezados
+            tabla += "<tr>";
+            Object.keys(data[0]).forEach(key => {
+                tabla += `<th>${key}</th>`;
+            });
+            tabla += "</tr>";
+            // Filas
+            data.forEach(row => {
+                tabla += "<tr>";
+                Object.values(row).forEach(val => {
+                    tabla += `<td>${val}</td>`;
+                });
+                tabla += "</tr>";
+            });
+            tabla += "</table>";
+
+            document.getElementById("ml-resultados").innerHTML = tabla;
         }
     </script>
 </body>
