@@ -30,12 +30,12 @@ def reporteria():
 def kmeans_endpoint():
     if request.method == 'POST':
         data = request.get_json()
-        desde = data.get('desde') if data else None
-        hasta = data.get('hasta') if data else None
+        desde = data.get('desde') if data and data.get('desde') is not None else 202404
+        hasta = data.get('hasta') if data and data.get('hasta') is not None else 202504
     else:
         # Para GET, toma los parámetros de la URL o usa valores por defecto
-        desde = request.args.get('desde', 202401)
-        hasta = request.args.get('hasta', 202406)
+        desde = request.args.get('desde', 202404)
+        hasta = request.args.get('hasta', 202504)
 
     try:
         desde = int(desde)
