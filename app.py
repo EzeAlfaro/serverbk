@@ -25,19 +25,22 @@ def index():
 def reporteria():
     return render_template('reporteria.html')
 
-@app.route('/kmeans', methods=['POST'])
+@app.route('/kmeans', methods=['GET', 'POST'])
+@app.route('/api/kmeans', methods=['GET', 'POST'])
 def kmeans_endpoint():
-    data = request.get_json()
-    desde = data.get('desde')
-    hasta = data.get('hasta')
-
-    if desde is None or hasta is None:
-        return jsonify({"error": "Faltan parámetros 'desde' o 'hasta'"}), 400
+    if request.method == 'POST':
+        data = request.get_json()
+        desde = data.get('desde') if data else None
+        hasta = data.get('hasta') if data else None
+    else:
+        # Para GET, toma los parámetros de la URL o usa valores por defecto
+        desde = request.args.get('desde', 202401)
+        hasta = request.args.get('hasta', 202406)
 
     try:
         desde = int(desde)
         hasta = int(hasta)
-    except ValueError:
+    except (ValueError, TypeError):
         return jsonify({"error": "Parámetros 'desde' y 'hasta' deben ser enteros"}), 400
     
     filtro = filtrar_dataset(desde, hasta)
