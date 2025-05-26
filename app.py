@@ -66,7 +66,7 @@ def guardar_resultados():
         # Ajustá los nombres y orden según tu tabla
         query = """
             INSERT INTO resultados_kmeans 
-            (nombre, ausencias_injustificadas, llegadas_tarde, rendimiento_alto, rendimiento_bajo, rendimiento_medio, salidas_tempranas, cluster, probabilidad_rotacion)
+            (nombre, ausencias_injustificadas, llegadas_tarde, rendimiento_alto, rendimiento_bajo, rendimiento_medio, salidas_tempranas, cluster, probabilidad_rotacion, desde, hasta)
             VALUES %s
         """
         
@@ -80,7 +80,9 @@ def guardar_resultados():
                 d['Rendimiento Medio'],
                 d['Salidas tempranas'],
                 d['Cluster'],
-                d['Probabilidad de Rotacion']
+                d['Probabilidad de Rotacion'],
+                d['DESDE'],
+                d['HASTA']
             ) for d in datos
         ]
 
