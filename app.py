@@ -29,7 +29,10 @@ def reporteria():
 @app.route('/api/kmeans', methods=['GET', 'POST'])
 def kmeans_endpoint():
     if request.method == 'POST':
-        data = request.get_json()
+        try:
+            data = request.get_json(force=True, silent=True)
+        except Exception:
+            data = None
         desde = data.get('desde') if data and data.get('desde') is not None else 202404
         hasta = data.get('hasta') if data and data.get('hasta') is not None else 202504
     else:
