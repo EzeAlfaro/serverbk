@@ -158,7 +158,7 @@ def mi_ip_publica():
 def metabase_card(card_id):
     METABASE_URL = "http://54.172.128.185:3000"
     METABASE_USER = "ceciliactorales@gmail.com"
-    METABASE_PASS = "MortyRica2025"
+    METABASE_PASS = "AINABI2025"
 
     # Autenticación
     auth_res = requests.post(f"{METABASE_URL}/api/session", json={
